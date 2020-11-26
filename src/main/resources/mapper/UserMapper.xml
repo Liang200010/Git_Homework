@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.nf.Git_hw.dao.UserDao">
+    <resultMap id="userMap" type="edu.nf.Git_hw.entity.Users">
+        <id property="uid" column="u_id"></id>
+        <result property="userName" column="u_name"></result>
+        <result property="age" column="age"></result>
+        <result property="tel" column="tel"></result>
+    </resultMap>
+
+    <select id="listUser" resultMap="userMap">
+        select u_id,u_name,age,tel from user_info2
+    </select>
+
+    <!--批量添加，利用sql语句的特性来执行
+            例如：insert into user_info2(u_name,age,tel)values
+            ('user1',21,'13326685888'),
+            ('user2',19,'13588861312')
+            因此可以使用foreach循环来拼接多条记录
+            注意：register方法参数是List类型，因此parameterType就指定为list-->
+    <insert id="register" parameterType="list">
+        insert into user_info2(u_name,age,tel)values
+        <foreach collection="list" item="u" separator=",">
+            (#{u.userName},#{u.age},#{u.tel})
+        </foreach>
+    </insert>
+</mapper>
