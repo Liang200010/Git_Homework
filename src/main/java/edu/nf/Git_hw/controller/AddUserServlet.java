@@ -25,11 +25,11 @@ public class AddUserServlet extends HttpServlet {
         String name=req.getParameter("name");
         Integer age=Integer.parseInt(req.getParameter("age"));
         String tel=req.getParameter("tel");
-        UserDao dao=new UserDaoImpl();
         Users users=new Users();
         users.setUserName(name);
         users.setAge(age);
         users.setTel(tel);
+        UserDao dao=new UserDaoImpl();
         List<Users> list = new ArrayList<>();
         list.add(users);
         dao.register(list);
